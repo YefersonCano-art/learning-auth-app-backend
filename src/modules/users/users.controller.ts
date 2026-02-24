@@ -5,7 +5,7 @@ const saltRounds = 10;
 
 const getUsers = async (req: Request, res: Response) => {
     const users = await User.findAll();
-    res.json({data: users});
+    res.json({data: users,});
 }
 
 const getUserById = async (req: Request, res: Response) => {

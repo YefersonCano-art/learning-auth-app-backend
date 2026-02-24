@@ -5,11 +5,15 @@ import { loginUser } from './auth.services';
 
 
 const login = async (req: Request, res: Response) => {
-  const loginData: LoginRequest = req.body;
-
-   const result = await loginUser(loginData, res);
-   res.json(result);
-
+  try {
+    const loginData: LoginRequest = req.body;
+    const result = await loginUser(loginData);
+    res.json(result);
+  } catch (error: any) {
+    const status = error.status || 500;
+    const message = error.message || 'Error en el servidor';
+    res.status(status).json({ message });
+  }
 };
 
 

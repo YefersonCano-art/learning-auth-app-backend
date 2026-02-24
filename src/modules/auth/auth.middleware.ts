@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
+import jwt from 'jsonwebtoken';
 
 // Validación para el login
 const loginSchema = z.object({
@@ -23,4 +24,22 @@ export const validateLogin = (req: Request, res: Response, next: NextFunction) =
     }
     res.status(500).json({ error: 'Error de validación' });
   }
+};
+
+export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+  // 1. Extraer token del header Authorization
+  const authHeader = req.headers['authorization'];
+  const token = authHeader?.split(' ')[1]; // "Bearer TOKEN"
+  
+  // 2. Si no hay token → rechazar
+  if (!token) return res.status(401).json({ message: 'No autenticado' });
+  
+  // 3. Verificar token
+  jwt.verify(token, process.env.JWT_SECRET!, (err, decoded) => {
+    if (err) return res.status(403).json({ message: 'Token inválido' });
+    
+    // 4. Guardar datos del usuario en req.user
+    req.user = decoded; // { userId, email }
+    next(); // Continuar a la ruta
+  });
 };
