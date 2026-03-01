@@ -7,12 +7,12 @@ import authRoutes from "./modules/auth/auth.routes";
 
 const app = express();
 
-// CORS primero, antes de las rutas
-const corsOptions = {
-  origin: 'http://localhost:5173', // Vite dev (sin barra final)
-  // credentials: true
-};
-app.use(cors(corsOptions));
+
+// const corsOptions = {
+//   origin: ['http://localhost:5173', 'http://localhost:3301'], 
+  
+// };
+app.use(cors());
 
 app.use(express.json());
 

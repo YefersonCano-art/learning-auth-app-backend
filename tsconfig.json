@@ -7,7 +7,7 @@
     "moduleDetection": "force",
     "allowJs": true,
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "./src",
 
     // Module resolution
     "moduleResolution": "node",
